@@ -1,0 +1,94 @@
+<!-- app/templates/index.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartCards – Gerador de Flashcards</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <header class="header">
+    <div class="header__content">
+      <h1 class="header__title">🧠 SmartCards</h1>
+      <p class="header__subtitle">Cole um texto e gere flashcards automaticamente</p>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- ===== SEÇÃO DE ENTRADA ===== -->
+    <section class="input-section">
+      <div class="card">
+        <h2 class="card__title">📝 Seu Texto</h2>
+
+        <div class="form-group">
+          <label for="texto" class="form-label">
+            Cole aqui o parágrafo que deseja estudar:
+          </label>
+          <textarea
+            id="texto"
+            class="form-textarea"
+            placeholder="Ex: A fotossíntese é o processo pelo qual plantas convertem luz solar em energia química, utilizando dióxido de carbono e água para produzir glicose e oxigênio..."
+            rows="8"
+            maxlength="5000"
+          ></textarea>
+          <!-- Contador de caracteres — atualizado via JS -->
+          <span class="char-counter">
+            <span id="char-count">0</span>/5000 caracteres
+          </span>
+        </div>
+
+        <div class="form-options">
+          <label class="toggle-label">
+            <input type="checkbox" id="usar-ia" class="toggle-input">
+            <span class="toggle-slider"></span>
+            Usar Inteligência Artificial (requer API Key)
+          </label>
+        </div>
+
+        <button id="btn-gerar" class="btn btn--primary" onclick="gerarFlashcards()">
+          ✨ Gerar Flashcards
+        </button>
+
+        <!-- Feedback de carregamento — oculto por padrão -->
+        <div id="loading" class="loading hidden">
+          <div class="loading__spinner"></div>
+          <p class="loading__text">Analisando seu texto...</p>
+        </div>
+
+        <!-- Mensagem de erro — oculta por padrão -->
+        <div id="erro" class="alert alert--error hidden"></div>
+      </div>
+    </section>
+
+    <!-- ===== SEÇÃO DE RESULTADOS ===== -->
+    <section id="resultados" class="results-section hidden">
+      <div class="results-header">
+        <h2 class="results-title">🃏 Seus Flashcards</h2>
+        <div class="results-meta">
+          <span id="total-cards" class="badge"></span>
+          <span id="modo-badge" class="badge badge--secondary"></span>
+        </div>
+        <p class="results-hint">💡 Clique nos cartões para ver a resposta</p>
+      </div>
+
+      <!-- Os flashcards são inseridos aqui pelo JavaScript -->
+      <div id="flashcards-grid" class="flashcards-grid"></div>
+
+      <button class="btn btn--secondary" onclick="resetar()">
+        🔄 Gerar novos flashcards
+      </button>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>SmartCards © 2025 — Projeto Acadêmico</p>
+  </footer>
+
+  <!-- Script carregado no final do body (melhora performance) -->
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
